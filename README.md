@@ -28,7 +28,7 @@ testImplementation 'org.camunda.bpm.extension:camunda-bpm-assert:1.2'
     
     org.camunda.bpm.extension.process_test_coverage.engine.ProcessCoverageInMemProcessEngineConfiguration
 ```
-<h2>Links<h2>
+<h2>Links</h2>
 ```
 https://training.camunda.com/java-dev/master/exercise3a.html
 https://docs.camunda.org/manual/7.20/user-guide/testing/assert-examples/
