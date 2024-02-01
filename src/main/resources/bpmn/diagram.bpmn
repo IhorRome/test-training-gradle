@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1tmgkvt" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.15.2" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
+  <bpmn:process id="PlanWeekend" isExecutable="true" camunda:historyTimeToLive="P30D">
+    <bpmn:startEvent id="PlanWeekendStart" name="Plan weekend">
+      <bpmn:outgoing>Flow_09ef9hj</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_09ef9hj" sourceRef="PlanWeekendStart" targetRef="CheckWeather" />
+    <bpmn:exclusiveGateway id="Gateway_038lp60">
+      <bpmn:incoming>Flow_184i3ax</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nhydh9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_19avhmo</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_184i3ax" sourceRef="CheckWeather" targetRef="Gateway_038lp60" />
+    <bpmn:sequenceFlow id="Flow_0nhydh9" name="Weather is good" sourceRef="Gateway_038lp60" targetRef="FigureOutActivity">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${weather == "good"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_19avhmo" name="Weather is bad" sourceRef="Gateway_038lp60" targetRef="WatchMovies">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${weather == "bad"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_02dz3bo">
+      <bpmn:incoming>Flow_1nloed0</bpmn:incoming>
+      <bpmn:incoming>Flow_1qc1n4k</bpmn:incoming>
+      <bpmn:outgoing>Flow_0s4dvxb</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1nloed0" sourceRef="FigureOutActivity" targetRef="Gateway_02dz3bo" />
+    <bpmn:sequenceFlow id="Flow_1qc1n4k" sourceRef="WatchMovies" targetRef="Gateway_02dz3bo" />
+    <bpmn:sequenceFlow id="Flow_0s4dvxb" sourceRef="Gateway_02dz3bo" targetRef="WaitForAnything" />
+    <bpmn:endEvent id="PlanWeekendEnd" name="Weekend successful">
+      <bpmn:incoming>Flow_0xeg560</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0xeg560" sourceRef="WaitForAnything" targetRef="PlanWeekendEnd" />
+    <bpmn:callActivity id="FigureOutActivity" name="Figure out activity" calledElement="GetFunActivity">
+      <bpmn:extensionElements>
+        <camunda:in variables="all" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0nhydh9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nloed0</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:receiveTask id="WaitForAnything" name="Wait for anything to happen" messageRef="Message_1kg3ir4">
+      <bpmn:incoming>Flow_0s4dvxb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xeg560</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:serviceTask id="CheckWeather" name="Check weather" camunda:delegateExpression="${checkWeatherDelegate}">
+      <bpmn:incoming>Flow_09ef9hj</bpmn:incoming>
+      <bpmn:outgoing>Flow_184i3ax</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="WatchMovies" name="Watch movies" camunda:assignee="user">
+      <bpmn:incoming>Flow_19avhmo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1qc1n4k</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmn:message id="Message_1kg3ir4" name="FriendCall" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PlanWeekend">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="PlanWeekendStart">
+        <dc:Bounds x="179" y="229" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="162" y="272" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_038lp60_di" bpmnElement="Gateway_038lp60" isMarkerVisible="true">
+        <dc:Bounds x="425" y="222" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_02dz3bo_di" bpmnElement="Gateway_02dz3bo" isMarkerVisible="true">
+        <dc:Bounds x="705" y="222" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14ftj4z_di" bpmnElement="PlanWeekendEnd">
+        <dc:Bounds x="1102" y="229" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1094" y="272" width="52" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03rwcow_di" bpmnElement="FigureOutActivity">
+        <dc:Bounds x="530" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1c3v4mf_di" bpmnElement="WaitForAnything">
+        <dc:Bounds x="880" y="207" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rq4ob7_di" bpmnElement="CheckWeather">
+        <dc:Bounds x="270" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nqx9sb_di" bpmnElement="WatchMovies">
+        <dc:Bounds x="530" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_09ef9hj_di" bpmnElement="Flow_09ef9hj">
+        <di:waypoint x="215" y="247" />
+        <di:waypoint x="270" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_184i3ax_di" bpmnElement="Flow_184i3ax">
+        <di:waypoint x="370" y="247" />
+        <di:waypoint x="425" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nhydh9_di" bpmnElement="Flow_0nhydh9">
+        <di:waypoint x="450" y="222" />
+        <di:waypoint x="450" y="120" />
+        <di:waypoint x="530" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="460" y="173" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19avhmo_di" bpmnElement="Flow_19avhmo">
+        <di:waypoint x="450" y="272" />
+        <di:waypoint x="450" y="360" />
+        <di:waypoint x="530" y="360" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="453" y="313" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nloed0_di" bpmnElement="Flow_1nloed0">
+        <di:waypoint x="630" y="120" />
+        <di:waypoint x="730" y="120" />
+        <di:waypoint x="730" y="222" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qc1n4k_di" bpmnElement="Flow_1qc1n4k">
+        <di:waypoint x="630" y="360" />
+        <di:waypoint x="730" y="360" />
+        <di:waypoint x="730" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s4dvxb_di" bpmnElement="Flow_0s4dvxb">
+        <di:waypoint x="755" y="247" />
+        <di:waypoint x="880" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xeg560_di" bpmnElement="Flow_0xeg560">
+        <di:waypoint x="980" y="247" />
+        <di:waypoint x="1102" y="247" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
