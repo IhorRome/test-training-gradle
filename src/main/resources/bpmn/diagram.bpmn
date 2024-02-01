@@ -28,7 +28,7 @@
     <bpmn:endEvent id="PlanWeekendEnd" name="Weekend successful">
       <bpmn:incoming>Flow_1nblr5r</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0xeg560" sourceRef="WaitForAnything" targetRef="Activity_1245i0s" />
+    <bpmn:sequenceFlow id="Flow_0xeg560" sourceRef="WaitForAnything" targetRef="CollectResults" />
     <bpmn:callActivity id="FigureOutActivity" name="Figure out activity" calledElement="GetFunActivity">
       <bpmn:extensionElements>
         <camunda:in variables="all" />
@@ -52,16 +52,16 @@
       <bpmn:incoming>Flow_19avhmo</bpmn:incoming>
       <bpmn:outgoing>Flow_1qc1n4k</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0qm3j0n" sourceRef="Activity_1245i0s" targetRef="Activity_1bbo09w" />
-    <bpmn:task id="Activity_1245i0s" name="Collect results">
+    <bpmn:sequenceFlow id="Flow_0qm3j0n" sourceRef="CollectResults" targetRef="CheckResults" />
+    <bpmn:task id="CollectResults" name="Collect results">
       <bpmn:extensionElements>
         <camunda:executionListener expression="${execution.setVariable(&#34;todo&#34;, activity) }" event="start" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0xeg560</bpmn:incoming>
       <bpmn:outgoing>Flow_0qm3j0n</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_1nblr5r" sourceRef="Activity_1bbo09w" targetRef="PlanWeekendEnd" />
-    <bpmn:userTask id="Activity_1bbo09w" name="Check results">
+    <bpmn:sequenceFlow id="Flow_1nblr5r" sourceRef="CheckResults" targetRef="PlanWeekendEnd" />
+    <bpmn:userTask id="CheckResults" name="Check results">
       <bpmn:incoming>Flow_0qm3j0n</bpmn:incoming>
       <bpmn:outgoing>Flow_1nblr5r</bpmn:outgoing>
     </bpmn:userTask>
@@ -81,6 +81,12 @@
       <bpmndi:BPMNShape id="Gateway_02dz3bo_di" bpmnElement="Gateway_02dz3bo" isMarkerVisible="true">
         <dc:Bounds x="705" y="222" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14ftj4z_di" bpmnElement="PlanWeekendEnd">
+        <dc:Bounds x="1502" y="229" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1494" y="272" width="52" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_03rwcow_di" bpmnElement="FigureOutActivity">
         <dc:Bounds x="530" y="80" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -95,16 +101,10 @@
       <bpmndi:BPMNShape id="Activity_0nqx9sb_di" bpmnElement="WatchMovies">
         <dc:Bounds x="530" y="320" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1xbdf3x_di" bpmnElement="Activity_1245i0s">
+      <bpmndi:BPMNShape id="Activity_1xbdf3x_di" bpmnElement="CollectResults">
         <dc:Bounds x="1080" y="207" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_14ftj4z_di" bpmnElement="PlanWeekendEnd">
-        <dc:Bounds x="1502" y="229" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1494" y="272" width="52" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0hjjew3_di" bpmnElement="Activity_1bbo09w">
+      <bpmndi:BPMNShape id="Activity_0hjjew3_di" bpmnElement="CheckResults">
         <dc:Bounds x="1300" y="207" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>

@@ -11,6 +11,7 @@ import org.camunda.bpm.extension.process_test_coverage.junit5.ProcessEngineCover
 import org.camunda.bpm.scenario.ProcessScenario;
 import org.camunda.bpm.scenario.Scenario;
 import org.camunda.bpm.scenario.delegate.EventSubscriptionDelegate;
+import org.camunda.bpm.scenario.delegate.TaskDelegate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,6 +57,8 @@ public class DiagramTest {
                 .deploy(processEngine());
 
         when(processScenario.waitsAtReceiveTask("WaitForAnything")).thenReturn(EventSubscriptionDelegate::receive);
+
+        when(processScenario.waitsAtUserTask("CheckResults")).thenReturn(TaskDelegate::complete);
 
         Scenario scenario = Scenario.run(processScenario)
                 .startByKey("PlanWeekend")
