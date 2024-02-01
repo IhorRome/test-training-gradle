@@ -9,7 +9,7 @@
       <bpmn:incoming>Flow_1xga6ca</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1xga6ca" sourceRef="GetActivity" targetRef="GetFunActivityEnd" />
-    <bpmn:serviceTask id="GetActivity" name="Get Activity" camunda:expression="${getActivityService.getActivity()}">
+    <bpmn:serviceTask id="GetActivity" name="Get Activity" camunda:expression="${execution.setVariable(&#34;activity&#34;, getActivityService.getActivity())}">
       <bpmn:incoming>Flow_00evvsz</bpmn:incoming>
       <bpmn:outgoing>Flow_1xga6ca</bpmn:outgoing>
     </bpmn:serviceTask>
