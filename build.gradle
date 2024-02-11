@@ -39,6 +39,8 @@ dependencies {
     testImplementation 'org.camunda.bpm.extension:camunda-bpm-assert:1.2'
     testImplementation 'org.camunda.bpm.extension:camunda-bpm-junit5:1.1.0'
 
+    testImplementation 'org.camunda.bpm.extension:camunda-bpm-process-test-coverage-junit5:1.0.3'
+
 
 }
 
